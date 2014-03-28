@@ -23,19 +23,55 @@
     ]]>
   </fx:Script>
 
-  <s:Panel title="IMA sdk integration example">
+  <s:Panel title="Flash IMA SDK integration example">
     <s:VGroup>
-      <s:HGroup>
-        <s:RadioButton groupName="adType"
+      <s:HGroup paddingLeft="10" paddingTop="10">
+        <s:Label paddingRight="15">
+            <s:text>Sample tags:</s:text>
+        </s:Label>
+        <s:Label
             id="linear"
-            label="Linear Ad"
-            width="150"
-            click="sdkIntegration.linearAdSelectionHandler(event)"/>
-        <s:RadioButton groupName="adType"
+            text="Linear Ad"
+            buttonMode="true"
+            paddingRight="15"
+            color="blue"
+            textDecoration="underline"
+            click="sampleAdTag.text = sdkIntegration.linearAdTag"/>
+        <s:Label
+            id="skippableLinear"
+            text="Skippable Linear Ad"
+            buttonMode="true"
+            paddingRight="15"
+            color="blue"
+            textDecoration="underline"
+            click="sampleAdTag.text = sdkIntegration.skippableLinearAdTag"/>
+        <s:Label
             id="nonlinear"
-            label="Non-linear Ad"
+            text="Non-linear Ad"
+            buttonMode="true"
+            paddingRight="15"
+            color="blue"
+            textDecoration="underline"
+            click="sampleAdTag.text = sdkIntegration.nonlinearAdTag"/>
+        <s:Label
+            id="vmap"
+            text="VMAP Ads"
+            buttonMode="true"
+            paddingRight="15"
+            color="blue"
+            textDecoration="underline"
+            click="sampleAdTag.text = sdkIntegration.vmapAdTag"/>
+      </s:HGroup>
+      <s:HGroup>
+        <s:Label fontSize="14" fontWeight="bold" paddingTop="5" paddingLeft="10">
+          <s:text>Ad Tag:</s:text>
+        </s:Label>
+        <s:TextInput id="sampleAdTag" width="400" text="" />
+        <s:Button
+            id="requestAd"
+            label="Request Ad"
             width="150"
-            click="sdkIntegration.nonlinearAdSelectionHandler(event)"/>
+            click="sdkIntegration.requestAdsButtonHandler(event, sampleAdTag.text)"/>
       </s:HGroup>
       <s:VideoPlayer
             id="videoPlayer"

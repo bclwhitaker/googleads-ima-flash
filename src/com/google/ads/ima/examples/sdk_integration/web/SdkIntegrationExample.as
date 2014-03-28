@@ -40,12 +40,25 @@ package com.google.ads.ima.examples.sdk_integration.web {
         "url=[referrer_url]&correlator=[timestamp]&" +
         "cust_params=iab_vast_samples%3Dlinear";
 
+    private static const SKIPPABLE_LINEAR_AD_TAG:String =
+        "http://pubads.g.doubleclick.net/gampad/ads?sz=640x360&" +
+        "iu=/6062/iab_vast_samples/skippable&ciu_szs=300x250,728x90&impl=s&" +
+        "gdfp_req=1&env=vp&output=xml_vast2&unviewed_position_start=1&" +
+        "url=[referrer_url]&correlator=[timestamp]";
+
     private static const NONLINEAR_AD_TAG:String =
         "http://pubads.g.doubleclick.net/gampad/ads?sz=400x300&" +
         "iu=%2F6062%2Fiab_vast_samples&ciu_szs=300x250%2C728x90&" +
         "impl=s&gdfp_req=1&env=vp&output=xml_vast2&unviewed_position_start=1&" +
         "url=[referrer_url]&correlator=[timestamp]&" +
         "cust_params=iab_vast_samples%3Dimageoverlay";
+
+    private static const VMAP_AD_TAG:String =
+        "http://pubads.g.doubleclick.net/gampad/ads?sz=640x480&" +
+        "iu=%2F15018773%2Feverything2&ciu_szs=300x250%2C468x60%2C728x90&" +
+        "impl=s&gdfp_req=1&env=vp&output=xml_vmap1&" +
+        "unviewed_position_start=1url=[referrer_url]&correlator=[timestamp]&" +
+        "cmsid=133&vid=10XWSh7W4so&ad_rule=1";
 
     // The video player object.
     private var videoPlayer:VideoPlayer;
@@ -79,19 +92,39 @@ package com.google.ads.ima.examples.sdk_integration.web {
     }
 
     /**
-     * Handler for when a user clicks on the "Linear Ad" radio button.
+     * Example of a linear ad tag.
      */
-    public function linearAdSelectionHandler(event:Event):void {
-      destroyAdsManager();
-      requestAds(LINEAR_AD_TAG);
+    public function get linearAdTag():String {
+      return LINEAR_AD_TAG;
     }
 
     /**
-     * Handler for when a user clicks on the "Non-linear Ad" radio button.
+     * Example of a skippable linear ad tag.
      */
-    public function nonlinearAdSelectionHandler(event:Event):void {
+    public function get skippableLinearAdTag():String {
+      return SKIPPABLE_LINEAR_AD_TAG;
+    }
+
+    /**
+     * Example of a non-linear ad tag.
+     */
+    public function get nonlinearAdTag():String {
+      return NONLINEAR_AD_TAG;
+    }
+
+    /**
+     * Example of a VMAP ad tag.
+     */
+    public function get vmapAdTag():String {
+      return VMAP_AD_TAG;
+    }
+
+    /**
+     * Handler for when a user clicks on the "Request Ads" button.
+     */
+    public function requestAdsButtonHandler(event:Event, adTag:String):void {
       destroyAdsManager();
-      requestAds(NONLINEAR_AD_TAG);
+      requestAds(adTag);
     }
 
     /**
