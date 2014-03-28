@@ -9,13 +9,21 @@ body {
   font-family: Helvetica, Arial, sans-serif;
 }
 
-.logo {
-  background: url("logo.png") repeat scroll 0 0 transparent;
-  background-repeat: no-repeat;
-  padding-left: 150px;
-  height: 60px;
-  padding-top: 5px;
-  margin: 0;
+#ima-logo-img {
+  margin-bottom: 0px;
+  float: left;
+}
+
+#ima-logo-text {
+  color: #91959C;
+  text-decoration: none;
+  font-size: 27px;
+  font-weight: 300;
+  line-height: 1.52;
+  text-shadow: 0 1px 1px white;
+  white-space: nowrap;
+  margin-top: -2px;
+  margin-left: 121px;
 }
 
 .topnav {
@@ -34,7 +42,7 @@ body {
   background-color: #fff9ca;
   padding: 5px;
   border: 1px #ccc solid;
-  width:500px;
+  width: 625px;
 }
 
 .footer {
