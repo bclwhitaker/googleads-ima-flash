@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2012 Google Inc. All Rights Reserved.
+  You may study, modify, and use this example for any purpose.
+  Note that this example is provided "as is", WITHOUT WARRANTY
+  of any kind either expressed or implied.
+ -->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+        xmlns:s="library://ns.adobe.com/flex/spark"
+        xmlns:mx="library://ns.adobe.com/flex/halo"
+        applicationComplete="applicationCompleteHandler()">
+
+  <fx:Script>
+    <![CDATA[
+      import com.google.ads.ima.examples.sdk_integration.web.SdkIntegrationExample;
+
+      private var sdkIntegration:SdkIntegrationExample;
+
+      public function applicationCompleteHandler():void {
+        Security.allowDomain("*");
+        sdkIntegration = new SdkIntegrationExample(videoPlayer);
+      }
+    ]]>
+  </fx:Script>
+
+  <s:Panel title="Flash IMA SDK integration example">
+    <s:VGroup>
+      <s:HGroup paddingLeft="10" paddingTop="10">
+        <s:Label paddingRight="15">
+            <s:text>Sample tags:</s:text>
+        </s:Label>
+        <s:Label
+            id="linear"
+            text="Linear Ad"
+            buttonMode="true"
+            paddingRight="15"
+            color="blue"
+            textDecoration="underline"
+            click="sampleAdTag.text = sdkIntegration.linearAdTag"/>
+        <s:Label
+            id="skippableLinear"
+            text="Skippable Linear Ad"
+            buttonMode="true"
+            paddingRight="15"
+            color="blue"
+            textDecoration="underline"
+            click="sampleAdTag.text = sdkIntegration.skippableLinearAdTag"/>
+        <s:Label
+            id="nonlinear"
+            text="Non-linear Ad"
+            buttonMode="true"
+            paddingRight="15"
+            color="blue"
+            textDecoration="underline"
+            click="sampleAdTag.text = sdkIntegration.nonlinearAdTag"/>
+        <s:Label
+            id="vmap"
+            text="VMAP Ads"
+            buttonMode="true"
+            paddingRight="15"
+            color="blue"
+            textDecoration="underline"
+            click="sampleAdTag.text = sdkIntegration.vmapAdTag"/>
+        <s:Label
+            id="vmapPreMidPost"
+            text="Pre/Mid/Post Ads"
+            buttonMode="true"
+            paddingRight="15"
+            color="blue"
+            textDecoration="underline"
+            click="sampleAdTag.text = sdkIntegration.vmapPreMidPostTag"/>
+      </s:HGroup>
+      <s:HGroup>
+        <s:Label fontSize="14" fontWeight="bold" paddingTop="5" paddingLeft="10">
+          <s:text>Ad Tag:</s:text>
+        </s:Label>
+        <s:TextInput id="sampleAdTag" width="400" text="" />
+        <s:Button
+            id="requestAd"
+            label="Request Ad"
+            width="150"
+            click="sdkIntegration.requestAdsButtonHandler(event, sampleAdTag.text)"/>
+      </s:HGroup>
+      <s:VideoPlayer
+            id="videoPlayer"
+            autoPlay="false"
+            width="640"
+            height="360"/>
+      </s:VGroup>
+  </s:Panel>
+</s:Application>
