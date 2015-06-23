@@ -78,6 +78,9 @@ package com.google.ads.ima.examples.sdk_integration.web {
     private var adsLoader:AdsLoader;
     private var adsManager:AdsManager;
 
+    // Is Preroll Break
+    private var isPreroll:Boolean = true;
+
     /**
      * Sets up the click-to-play player for ads and content playback.
      *
@@ -252,7 +255,10 @@ package com.google.ads.ima.examples.sdk_integration.web {
      */
     private function loadedHandler(event:AdEvent):void {
       console('loadedHandler fired');
-      adsManager.stop();
+      if (isPreroll) {
+        adsManager.stop();
+      }
+      isPreroll = false;
     }
 
     /**
