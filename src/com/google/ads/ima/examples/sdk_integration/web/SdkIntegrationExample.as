@@ -25,6 +25,8 @@ package com.google.ads.ima.examples.sdk_integration.web {
   import flash.events.FullScreenEvent;
   import flash.events.MouseEvent;
 
+  import flash.external.ExternalInterface;
+
   /**
    * Simple Google IMA SDK video player integration.
    */
@@ -59,6 +61,13 @@ package com.google.ads.ima.examples.sdk_integration.web {
         "impl=s&gdfp_req=1&env=vp&output=xml_vmap1&" +
         "unviewed_position_start=1url=[referrer_url]&correlator=[timestamp]&" +
         "cmsid=133&vid=10XWSh7W4so&ad_rule=1";
+
+    private static const VMAP_PRE_MID_POST_TAG:String =
+        "http://pubads.g.doubleclick.net/gampad/ads?sz=640x480&" +
+        "iu=/124319096/external/ad_rule_samples&ciu_szs=300x250&ad_rule=1&" +
+        "impl=s&gdfp_req=1&env=vp&output=vmap&unviewed_position_start=1&" +
+        "cust_params=deployment%3Ddevsite%26sample_ar%3Dpremidpostpod&cmsid=496&" +
+        "vid=short_onecue&correlator=";
 
     // The video player object.
     private var videoPlayer:VideoPlayer;
@@ -120,6 +129,13 @@ package com.google.ads.ima.examples.sdk_integration.web {
     }
 
     /**
+     * Example of a VMAP ad tag with pre/mid/post ad breaks.
+     */
+    public function get vmapPreMidPostTag():String {
+      return VMAP_PRE_MID_POST_TAG;
+    }
+
+    /**
      * Handler for when a user clicks on the "Request Ads" button.
      */
     public function requestAdsButtonHandler(event:Event, adTag:String):void {
@@ -134,6 +150,7 @@ package com.google.ads.ima.examples.sdk_integration.web {
       if (adsLoader == null) {
         // On the first request, create the AdsLoader.
         adsLoader = new AdsLoader();
+        adsLoader.settings.autoPlayAdBreaks = false;
         // The SDK uses a 2 stage loading process. Without this call, the second
         // loading stage will take place when ads are requested. Including this
         // call will decrease latency in starting ad playback.
@@ -196,8 +213,10 @@ package com.google.ads.ima.examples.sdk_integration.web {
                                     contentResumeRequestedHandler);
         // We want to know when an ad starts.
         adsManager.addEventListener(AdEvent.STARTED, startedHandler);
+        adsManager.addEventListener(AdEvent.LOADED, loadedHandler);
         adsManager.addEventListener(AdErrorEvent.AD_ERROR,
                                     adsManagerPlayErrorHandler);
+        adsManager.addEventListener(AdEvent.AD_BREAK_READY, adBreakReadyHandler);
 
         // If your video player supports a specific version of VPAID ads, pass
         // in the version. If your video player does not support VPAID ads yet,
@@ -216,8 +235,24 @@ package com.google.ads.ima.examples.sdk_integration.web {
         (videoPlayer.videoDisplay.parent as Group).addElement(flexAdContainer);
 
         // Start the ad playback.
-        adsManager.start();
+        //adsManager.start();
       }
+    }
+
+    /**
+     * Invoked when the SDK has an ad break ready to play.
+     */
+    private function adBreakReadyHandler(event:AdEvent):void {
+      console('adBreakReadyHandler fired');
+      adsManager.start();
+    }
+
+    /**
+     * Invoked when the SDK has an loaded an ad.
+     */
+    private function loadedHandler(event:AdEvent):void {
+      console('loadedHandler fired');
+      adsManager.stop();
     }
 
     /**
@@ -281,6 +316,7 @@ package com.google.ads.ima.examples.sdk_integration.web {
      * the content.
      */
     private function contentResumeRequestedHandler(event:AdEvent):void {
+      console('content resume requested');
       // Rewire controls to affect content instead of the ads manager.
       enableContentControls();
       videoPlayer.play();
@@ -417,6 +453,12 @@ package com.google.ads.ima.examples.sdk_integration.web {
       // Tell the SDK when any content completes, even content without ads. The
       // SDK uses this method for better ad selection (especially VMAP).
       adsLoader.contentComplete();
+    }
+
+    private function console(value:*):void {
+      try {
+        ExternalInterface.call('window.console.log', "["+ExternalInterface.objectID+"]", value);
+      } catch(err:Error) {}
     }
   }
 }

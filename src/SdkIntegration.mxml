@@ -61,6 +61,14 @@
             color="blue"
             textDecoration="underline"
             click="sampleAdTag.text = sdkIntegration.vmapAdTag"/>
+        <s:Label
+            id="vmapPreMidPost"
+            text="Pre/Mid/Post Ads"
+            buttonMode="true"
+            paddingRight="15"
+            color="blue"
+            textDecoration="underline"
+            click="sampleAdTag.text = sdkIntegration.vmapPreMidPostTag"/>
       </s:HGroup>
       <s:HGroup>
         <s:Label fontSize="14" fontWeight="bold" paddingTop="5" paddingLeft="10">
